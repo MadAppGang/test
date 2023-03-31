@@ -36,16 +36,22 @@ jobs:
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
 
-      - name: Build and push Docker image
-        uses: docker/build-push-action@v4
+      - name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v4
         with:
-          context: ./nodejs/.
-          push: true
           images: |
             ${{ env.ECR_REPOSITORY }}
           tags: |
             type=sha
             latest
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v4
+        with:
+          context: ./nodejs/.
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
       - name: Deploy to Amazon ECS
         run: |
           LATEST_TASK_DEFINITON_REVISION=$(aws ecs describe-task-definition --task-definition ${{ env.ECS_TASK }} | jq '.taskDefinition.revision')
