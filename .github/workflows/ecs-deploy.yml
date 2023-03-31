@@ -41,8 +41,11 @@ jobs:
         with:
           context: ./nodejs/.
           push: true
-          tags: ${{ env.ECR_REPOSITORY }}:${{ github.sha }}
-
+          images: |
+            ${{ env.ECR_REPOSITORY }}
+          tags: |
+            type=sha
+            latest
       - name: Deploy to Amazon ECS
         run: |
           LATEST_TASK_DEFINITON_REVISION=$(aws ecs describe-task-definition --task-definition ${{ env.ECS_TASK }} | jq '.taskDefinition.revision')
