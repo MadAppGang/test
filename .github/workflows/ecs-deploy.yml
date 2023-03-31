@@ -45,5 +45,5 @@ jobs:
 
       - name: Deploy to Amazon ECS
         run: |
-          LATEST_TASK_DEFINITON_REVISION=$(aws ecs describe-task-definition --task-definition gigit_backend | jq '.taskDefinition.revision')
+          LATEST_TASK_DEFINITON_REVISION=$(aws ecs describe-task-definition --task-definition ${{ env.ECS_TASK }} | jq '.taskDefinition.revision')
           aws ecs update-service --cluster ${{ env.ECS_CLUSTER }} --service ${{ env.ECS_SERVICE }} --task-definition ${{ env.ECS_TASK }}:$LATEST_TASK_DEFINITON_REVISION  --force-new-deployment
