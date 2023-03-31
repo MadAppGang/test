@@ -5,5 +5,5 @@ WORKDIR /usr/src/app
 COPY package*.json ./
 RUN yarn install && yarn cache clean
 COPY . .
-EXPOSE 8000
+EXPOSE 8080
 CMD ["node", "index.js"]
