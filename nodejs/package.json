@@ -1,0 +1,11 @@
+{
+  "name": "cabin-backend",
+  "version": "1.0.0",
+  "description": "Cabin project backned",
+  "main": "index.js",
+  "author": "JAck Rudenko",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
